@@ -38,8 +38,8 @@ const AuthInfoProvider = ({ children }) => {
 
   //  email verify  //
 
-  const emailCheck = (user) => {
-    return sendEmailVerification(auth);
+  const emailCheck = (email) => {
+    return sendEmailVerification(auth, email);
   };
 
   useEffect(() => {
@@ -60,6 +60,7 @@ const AuthInfoProvider = ({ children }) => {
     logOut,
     loading,
     emailCheck,
+    auth,
   };
 
   return <DataContext.Provider value={info}>{children}</DataContext.Provider>;

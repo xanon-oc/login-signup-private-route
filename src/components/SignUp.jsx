@@ -8,7 +8,7 @@ const SignUp = () => {
 
   // context
 
-  const { createUserHandler, emailCheck } = useContext(DataContext);
+  const { createUserHandler, emailCheck, auth } = useContext(DataContext);
 
   const handleRegisterFormSubmit = (e) => {
     setError("");
@@ -29,8 +29,10 @@ const SignUp = () => {
     createUserHandler(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        emailCheck();
-        alert("please verify your email");
+        emailCheck(auth, email).then(() => {
+          alert("please verify your email");
+        });
+
         console.log(loggedUser);
         setSuccess("Account created successfully");
         setError("");

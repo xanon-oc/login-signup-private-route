@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { DataContext } from "./Providers/AuthInfoProvider";
+import { sendEmailVerification } from "firebase/auth";
 
 const SignUp = () => {
   const [success, setSuccess] = useState("");
@@ -8,7 +9,7 @@ const SignUp = () => {
 
   // context
 
-  const { createUserHandler, emailCheck, auth } = useContext(DataContext);
+  const { createUserHandler } = useContext(DataContext);
 
   const handleRegisterFormSubmit = (e) => {
     setError("");
@@ -29,18 +30,20 @@ const SignUp = () => {
     createUserHandler(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        emailCheck(auth, email).then(() => {
-          alert("please verify your email");
-        });
-
+        emailVerification(result.user);
         console.log(loggedUser);
-        setSuccess("Account created successfully");
         setError("");
         form.reset();
       })
       .catch((error) => {
         setError(error.message);
       });
+
+    const emailVerification = (user) => {
+      sendEmailVerification(user).then((result) => {
+        alert("Verification email send");
+      });
+    };
   };
   return (
     <div>

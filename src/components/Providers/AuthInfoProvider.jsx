@@ -3,7 +3,6 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
-  sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -38,9 +37,9 @@ const AuthInfoProvider = ({ children }) => {
 
   //  email verify  //
 
-  const emailCheck = (email) => {
-    return sendEmailVerification(auth, email);
-  };
+  // const emailCheck = (email) => {
+  //   return sendEmailVerification(auth, email);
+  // };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currenUser) => {
@@ -59,8 +58,6 @@ const AuthInfoProvider = ({ children }) => {
     user,
     logOut,
     loading,
-    emailCheck,
-    auth,
   };
 
   return <DataContext.Provider value={info}>{children}</DataContext.Provider>;
